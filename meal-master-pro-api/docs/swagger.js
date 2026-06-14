@@ -11,7 +11,7 @@ const options = {
     },
     servers: [
       {
-        url: "https://meal-master-pro-api.onrender.com", // replace with your Render URL
+        url: "https://meal-master-pro-api.onrender.com",
         description: "Production server (Render)"
       },
       {
@@ -19,6 +19,7 @@ const options = {
         description: "Local development server"
       }
     ],
+    // ✅ Add global tag definitions here
     tags: [
       {
         name: "Recipes",
