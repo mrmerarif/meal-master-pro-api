@@ -9,6 +9,14 @@ const options = {
       version: "1.0.0",
       description: "API documentation for recipes, ingredients, users, and meal plans"
     },
+
+    "x-tagGroups": [
+      {
+        name: "API Endpoints",
+        tags: ["Recipes", "Ingredients"]
+      }
+    ],
+
     servers: [
       {
         url: "https://meal-master-pro-api.onrender.com",
@@ -19,7 +27,7 @@ const options = {
         description: "Local development server"
       }
     ],
-    // ✅ Add global tag definitions here
+
     tags: [
       {
         name: "Recipes",
@@ -30,6 +38,7 @@ const options = {
         description: "Endpoints for managing ingredients"
       }
     ],
+
     components: {
       schemas: {
         Recipe: {

@@ -18,8 +18,16 @@ app.use(express.json());
 app.use("/api/recipes", recipeRoutes);
 app.use("/api/ingredients", ingredientRoutes);
 
-// Swagger docs
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+// Swagger docs (schemas hidden by default)
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(specs, {
+    swaggerOptions: {
+      defaultModelsExpandDepth: -1 // hides schemas section by default
+    }
+  })
+);
 
 app.get("/", (req, res) => {
   res.send("Meal Master Pro API is running...");
