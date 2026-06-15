@@ -5,6 +5,8 @@ import swaggerUi from "swagger-ui-express";
 
 import recipeRoutes from "./routes/recipes.js";
 import ingredientRoutes from "./routes/ingredients.js";
+import mealPlanRoutes from "./routes/mealPlans.js";
+import shoppingListRoutes from "./routes/shoppingLists.js";
 import { connectDB } from "./config/db.js";
 import specs from "./docs/swagger.js"; // central Swagger config
 
@@ -17,6 +19,8 @@ app.use(express.json());
 // Routes
 app.use("/api/recipes", recipeRoutes);
 app.use("/api/ingredients", ingredientRoutes);
+app.use("/api/mealplans", mealPlanRoutes);
+app.use("/api/shoppinglists", shoppingListRoutes);
 
 // Swagger docs (schemas hidden by default)
 app.use(
@@ -24,7 +28,11 @@ app.use(
   swaggerUi.serve,
   swaggerUi.setup(specs, {
     swaggerOptions: {
-      defaultModelsExpandDepth: -1 // hides schemas section by default
+      defaultModelsExpandDepth: -1, // hides schemas section by default
+      displayRequestDuration: true,
+      tryItOutEnabled: true,
+      defaultModelRendering: "model",
+      docExpansion: "none"
     }
   })
 );

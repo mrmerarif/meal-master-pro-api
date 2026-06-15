@@ -1,4 +1,3 @@
-// docs/swagger.js
 import swaggerJsdoc from "swagger-jsdoc";
 
 const options = {
@@ -7,13 +6,14 @@ const options = {
     info: {
       title: "Meal Master Pro API",
       version: "1.0.0",
-      description: "API documentation for recipes, ingredients, users, and meal plans"
+      description:
+        "API documentation for recipes, ingredients, meal plans, and shopping lists"
     },
 
     "x-tagGroups": [
       {
         name: "API Endpoints",
-        tags: ["Recipes", "Ingredients"]
+        tags: ["Recipes", "Ingredients", "MealPlans", "ShoppingLists"]
       }
     ],
 
@@ -29,14 +29,10 @@ const options = {
     ],
 
     tags: [
-      {
-        name: "Recipes",
-        description: "Endpoints for managing recipes"
-      },
-      {
-        name: "Ingredients",
-        description: "Endpoints for managing ingredients"
-      }
+      { name: "Recipes", description: "Endpoints for managing recipes" },
+      { name: "Ingredients", description: "Endpoints for managing ingredients" },
+      { name: "MealPlans", description: "Endpoints for managing meal plans" },
+      { name: "ShoppingLists", description: "Endpoints for managing shopping lists" }
     ],
 
     components: {
@@ -65,15 +61,6 @@ const options = {
             unit: { type: "string" }
           }
         },
-        User: {
-          type: "object",
-          properties: {
-            username: { type: "string" },
-            email: { type: "string", format: "email" },
-            password: { type: "string" },
-            role: { type: "string", enum: ["user", "admin"] }
-          }
-        },
         MealPlan: {
           type: "object",
           properties: {
@@ -83,13 +70,31 @@ const options = {
               type: "array",
               items: { type: "string" } // recipe IDs
             },
-            createdBy: { type: "string" } // user ID
+            createdBy: { type: "string" }
+          }
+        },
+        ShoppingList: {
+          type: "object",
+          properties: {
+            name: { type: "string" },
+            items: {
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  ingredient: { type: "string" },
+                  quantity: { type: "string" },
+                  unit: { type: "string" }
+                }
+              }
+            },
+            createdBy: { type: "string" }
           }
         }
       }
     }
   },
-  apis: ["./routes/*.js"], // points to all route files
+  apis: ["./routes/*.js"]
 };
 
 const specs = swaggerJsdoc(options);
