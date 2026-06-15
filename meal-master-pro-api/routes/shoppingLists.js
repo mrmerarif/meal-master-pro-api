@@ -9,19 +9,97 @@ import {
 
 const router = express.Router();
 
-// GET all shopping lists
+/**
+ * @swagger
+ * tags:
+ *   name: ShoppingLists
+ *   description: Endpoints for managing shopping lists
+ */
+
+/**
+ * @swagger
+ * /api/shoppinglists:
+ *   get:
+ *     summary: Get all shopping lists
+ *     tags: [ShoppingLists]
+ *     responses:
+ *       200:
+ *         description: List of shopping lists
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/ShoppingList'
+ *   post:
+ *     summary: Create a new shopping list
+ *     tags: [ShoppingLists]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/ShoppingList'
+ *     responses:
+ *       201:
+ *         description: Shopping list created successfully
+ */
+
+/**
+ * @swagger
+ * /api/shoppinglists/{id}:
+ *   get:
+ *     summary: Get a shopping list by ID
+ *     tags: [ShoppingLists]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Shopping list details
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ShoppingList'
+ *   put:
+ *     summary: Update a shopping list by ID
+ *     tags: [ShoppingLists]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/ShoppingList'
+ *     responses:
+ *       200:
+ *         description: Shopping list updated successfully
+ *   delete:
+ *     summary: Delete a shopping list by ID
+ *     tags: [ShoppingLists]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Shopping list deleted successfully
+ */
+
 router.get("/", getShoppingLists);
-
-// GET one shopping list by ID
 router.get("/:id", getShoppingListById);
-
-// POST new shopping list
 router.post("/", createShoppingList);
-
-// PUT update shopping list
 router.put("/:id", updateShoppingList);
-
-// DELETE shopping list
 router.delete("/:id", deleteShoppingList);
 
 export default router;

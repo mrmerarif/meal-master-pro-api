@@ -10,13 +10,6 @@ const options = {
         "API documentation for recipes, ingredients, meal plans, and shopping lists"
     },
 
-    "x-tagGroups": [
-      {
-        name: "API Endpoints",
-        tags: ["Recipes", "Ingredients", "MealPlans", "ShoppingLists"]
-      }
-    ],
-
     servers: [
       {
         url: "https://meal-master-pro-api.onrender.com",
@@ -28,6 +21,13 @@ const options = {
       }
     ],
 
+    "x-tagGroups": [
+      {
+        name: "API Endpoints",
+        tags: ["Recipes", "Ingredients", "MealPlans", "ShoppingLists"]
+      }
+    ],
+
     tags: [
       { name: "Recipes", description: "Endpoints for managing recipes" },
       { name: "Ingredients", description: "Endpoints for managing ingredients" },
@@ -36,6 +36,13 @@ const options = {
     ],
 
     components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT"
+        }
+      },
       schemas: {
         Recipe: {
           type: "object",
@@ -68,7 +75,7 @@ const options = {
             description: { type: "string" },
             recipes: {
               type: "array",
-              items: { type: "string" } // recipe IDs
+              items: { type: "string" }
             },
             createdBy: { type: "string" }
           }

@@ -9,19 +9,97 @@ import {
 
 const router = express.Router();
 
-// GET all meal plans
+/**
+ * @swagger
+ * tags:
+ *   name: MealPlans
+ *   description: Endpoints for managing meal plans
+ */
+
+/**
+ * @swagger
+ * /api/mealplans:
+ *   get:
+ *     summary: Get all meal plans
+ *     tags: [MealPlans]
+ *     responses:
+ *       200:
+ *         description: List of meal plans
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/MealPlan'
+ *   post:
+ *     summary: Create a new meal plan
+ *     tags: [MealPlans]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/MealPlan'
+ *     responses:
+ *       201:
+ *         description: Meal plan created successfully
+ */
+
+/**
+ * @swagger
+ * /api/mealplans/{id}:
+ *   get:
+ *     summary: Get a meal plan by ID
+ *     tags: [MealPlans]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Meal plan details
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/MealPlan'
+ *   put:
+ *     summary: Update a meal plan by ID
+ *     tags: [MealPlans]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/MealPlan'
+ *     responses:
+ *       200:
+ *         description: Meal plan updated successfully
+ *   delete:
+ *     summary: Delete a meal plan by ID
+ *     tags: [MealPlans]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Meal plan deleted successfully
+ */
+
 router.get("/", getMealPlans);
-
-// GET one meal plan by ID
 router.get("/:id", getMealPlanById);
-
-// POST new meal plan
 router.post("/", createMealPlan);
-
-// PUT update meal plan
 router.put("/:id", updateMealPlan);
-
-// DELETE meal plan
 router.delete("/:id", deleteMealPlan);
 
 export default router;
