@@ -2,14 +2,21 @@ import { OAuth2Client } from "google-auth-library";
 import dotenv from "dotenv";
 
 dotenv.config();
+
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
-// Middleware to verify Google OAuth 2.0 token
+// Middleware to verify Google OAuth 2.0 token
 export const verifyGoogleToken = async (req, res, next) => {
   try {
-    const token = req.headers.authorization?.split(" ")[1];
+    // Expect header: Authorization: Bearer <token>
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res.status(401).json({ message: "Authorization header missing" });
+    }
+
+    const token = authHeader.split(" ")[1];
     if (!token) {
-      return res.status(401).json({ message: "Authorization token missing" });
+      return res.status(401).json({ message: "Token missing" });
     }
 
     const ticket = await client.verifyIdToken({
