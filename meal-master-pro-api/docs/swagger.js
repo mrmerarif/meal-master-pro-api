@@ -89,36 +89,56 @@ const options = {
             },
             createdBy: { type: "string" }
           }
-        },
-        AuthLogin: {
-          type: "object",
-          properties: {
-            email: { type: "string" },
-            password: { type: "string" }
-          },
-          required: ["email", "password"]
         }
       }
     },
 
-    // ✅ Add paths for Auth so Swagger shows it
+    // ✅ Updated paths for Google OAuth
     paths: {
       "/auth/login": {
-        post: {
+        get: {
           tags: ["Auth"],
-          summary: "Login with email and password",
-          description: "Authenticate user and return JWT token",
-          requestBody: {
-            required: true,
-            content: {
-              "application/json": {
-                schema: { $ref: "#/components/schemas/AuthLogin" }
-              }
-            }
-          },
+          summary: "Start Google OAuth login",
+          description: "Redirects user to Google OAuth 2.0 for authentication",
           responses: {
-            200: { description: "Login successful" },
-            401: { description: "Unauthorized" }
+            302: {
+              description: "Redirects to Google OAuth login page"
+            }
+          }
+        }
+      },
+      "/auth/google/callback": {
+        get: {
+          tags: ["Auth"],
+          summary: "Handle Google OAuth callback",
+          description: "Exchanges authorization code for tokens and returns JWT",
+          parameters: [
+            {
+              name: "code",
+              in: "query",
+              required: true,
+              description: "Authorization code returned by Google"
+            }
+          ],
+          responses: {
+            200: {
+              description: "Login successful, returns JWT token"
+            },
+            401: {
+              description: "Unauthorized or invalid code"
+            }
+          }
+        }
+      },
+      "/auth/logout": {
+        get: {
+          tags: ["Auth"],
+          summary: "Logout",
+          description: "Ends the user session",
+          responses: {
+            200: {
+              description: "Logged out successfully"
+            }
           }
         }
       }
