@@ -23,13 +23,7 @@ const router = express.Router();
  *     tags: [Ingredients]
  *     responses:
  *       200:
- *         description: List of ingredients
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Ingredient'
+ *         description: Successfully retrieved all ingredients
  *   post:
  *     summary: Create a new ingredient
  *     tags: [Ingredients]
@@ -39,10 +33,6 @@ const router = express.Router();
  *         application/json:
  *           schema:
  *             $ref: '#/components/schemas/Ingredient'
- *           example:
- *             name: "Tomato"
- *             quantity: "2"
- *             unit: "pieces"
  *     responses:
  *       201:
  *         description: Ingredient created successfully
@@ -66,10 +56,6 @@ const router = express.Router();
  *         application/json:
  *           schema:
  *             $ref: '#/components/schemas/Ingredient'
- *           example:
- *             name: "Onion"
- *             quantity: "1"
- *             unit: "piece"
  *     responses:
  *       200:
  *         description: Ingredient updated successfully

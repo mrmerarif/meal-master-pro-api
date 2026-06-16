@@ -24,13 +24,7 @@ const router = express.Router();
  *     tags: [MealPlans]
  *     responses:
  *       200:
- *         description: List of meal plans
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/MealPlan'
+ *         description: Successfully retrieved all meal plans
  *   post:
  *     summary: Create a new meal plan
  *     tags: [MealPlans]
@@ -59,11 +53,9 @@ const router = express.Router();
  *           type: string
  *     responses:
  *       200:
- *         description: Meal plan details
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/MealPlan'
+ *         description: Successfully retrieved meal plan
+ *       404:
+ *         description: Meal plan not found
  *   put:
  *     summary: Update a meal plan by ID
  *     tags: [MealPlans]
@@ -82,6 +74,8 @@ const router = express.Router();
  *     responses:
  *       200:
  *         description: Meal plan updated successfully
+ *       404:
+ *         description: Meal plan not found
  *   delete:
  *     summary: Delete a meal plan by ID
  *     tags: [MealPlans]
@@ -94,6 +88,8 @@ const router = express.Router();
  *     responses:
  *       200:
  *         description: Meal plan deleted successfully
+ *       404:
+ *         description: Meal plan not found
  */
 
 router.get("/", getMealPlans);
