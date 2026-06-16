@@ -6,6 +6,7 @@ import {
   updateRecipe,
   deleteRecipe
 } from "../controllers/recipesController.js";
+import { verifyGoogleToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -24,30 +25,23 @@ const router = express.Router();
  *     tags: [Recipes]
  *     responses:
  *       200:
- *         description: List of recipes
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Recipe'
+ *         description: Successfully retrieved all recipes
  *   post:
  *     summary: Create a new recipe
  *     tags: [Recipes]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             $ref: '#/components/schemas/Recipe'
- *           example:
- *             name: "Chicken Tacos"
- *             description: "Quick and easy tacos"
- *             ingredients: []
- *             steps: ["Cook chicken", "Warm tortillas", "Assemble tacos"]
  *     responses:
  *       201:
  *         description: Recipe created successfully
+ *       401:
+ *         description: Unauthorized
  */
 
 /**
@@ -64,16 +58,14 @@ const router = express.Router();
  *           type: string
  *     responses:
  *       200:
- *         description: Recipe details
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Recipe'
+ *         description: Successfully retrieved recipe
  *       404:
  *         description: Recipe not found
  *   put:
  *     summary: Update a recipe by ID
  *     tags: [Recipes]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -86,19 +78,18 @@ const router = express.Router();
  *         application/json:
  *           schema:
  *             $ref: '#/components/schemas/Recipe'
- *           example:
- *             name: "Updated Chicken Tacos"
- *             description: "Now with salsa"
- *             ingredients: []
- *             steps: ["Cook chicken", "Add salsa", "Warm tortillas"]
  *     responses:
  *       200:
  *         description: Recipe updated successfully
+ *       401:
+ *         description: Unauthorized
  *       404:
  *         description: Recipe not found
  *   delete:
  *     summary: Delete a recipe by ID
  *     tags: [Recipes]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -108,14 +99,16 @@ const router = express.Router();
  *     responses:
  *       200:
  *         description: Recipe deleted successfully
+ *       401:
+ *         description: Unauthorized
  *       404:
  *         description: Recipe not found
  */
 
 router.get("/", getRecipes);
 router.get("/:id", getRecipeById);
-router.post("/", createRecipe);
-router.put("/:id", updateRecipe);
-router.delete("/:id", deleteRecipe);
+router.post("/", verifyGoogleToken, createRecipe);
+router.put("/:id", verifyGoogleToken, updateRecipe);
+router.delete("/:id", verifyGoogleToken, deleteRecipe);
 
 export default router;
