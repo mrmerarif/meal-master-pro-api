@@ -17,8 +17,11 @@ export const googleCallback = async (req, res) => {
   try {
     const { code } = req.query;
 
+    // Exchange code for tokens
     const { tokens } = await client.getToken({
       code,
+      client_id: process.env.GOOGLE_CLIENT_ID,
+      client_secret: process.env.GOOGLE_CLIENT_SECRET,
       redirect_uri: process.env.GOOGLE_REDIRECT_URI
     });
 
@@ -31,7 +34,11 @@ export const googleCallback = async (req, res) => {
 
     res.json({ message: "Login successful", token: jwtToken });
   } catch (err) {
-    res.status(500).json({ message: "OAuth callback failed", error: err.message });
+    console.error("OAuth error:", err.response?.data || err.message);
+    res.status(500).json({
+      message: "OAuth callback failed",
+      error: err.response?.data || err.message
+    });
   }
 };
 
