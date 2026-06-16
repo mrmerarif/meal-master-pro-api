@@ -4,7 +4,12 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+// ✅ Initialize client with both ID and secret
+const client = new OAuth2Client(
+  process.env.GOOGLE_CLIENT_ID,
+  process.env.GOOGLE_CLIENT_SECRET,
+  process.env.GOOGLE_REDIRECT_URI
+);
 
 // Redirect user to Google OAuth
 export const login = (req, res) => {
@@ -17,15 +22,13 @@ export const googleCallback = async (req, res) => {
   try {
     const { code } = req.query;
 
-    // Exchange code for tokens
+    // ✅ Exchange code for tokens
     const { tokens } = await client.getToken({
       code,
-      client_id: process.env.GOOGLE_CLIENT_ID,
-      client_secret: process.env.GOOGLE_CLIENT_SECRET,
       redirect_uri: process.env.GOOGLE_REDIRECT_URI
     });
 
-    // Create JWT for your API
+    // ✅ Create JWT for your API
     const jwtToken = jwt.sign(
       { idToken: tokens.id_token },
       process.env.JWT_SECRET,
