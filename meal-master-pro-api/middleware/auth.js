@@ -17,7 +17,7 @@ export const verifyGoogleToken = async (req, res, next) => {
       return res.status(401).json({ message: "Token missing" });
     }
 
-    // Verify the token with Google
+    // This line actually verifies with Google
     const ticket = await client.verifyIdToken({
       idToken: token,
       audience: process.env.GOOGLE_CLIENT_ID
