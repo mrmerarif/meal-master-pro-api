@@ -93,7 +93,7 @@ const options = {
       }
     },
 
-    // ✅ Updated paths for Google OAuth
+    
     paths: {
       "/auth/login": {
         get: {
