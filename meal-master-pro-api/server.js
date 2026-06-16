@@ -43,9 +43,15 @@ app.get("/", (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 
+// Always connect DB, but only start server if not in test mode
 const startServer = async () => {
   await connectDB();
-  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  if (process.env.NODE_ENV !== "test") {
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  }
 };
 
 startServer();
+
+// Export app for testing
+export default app;
