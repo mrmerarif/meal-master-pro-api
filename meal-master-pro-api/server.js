@@ -7,6 +7,7 @@ import recipeRoutes from "./routes/recipes.js";
 import ingredientRoutes from "./routes/ingredients.js";
 import mealPlanRoutes from "./routes/mealPlans.js";
 import shoppingListRoutes from "./routes/shoppingLists.js";
+import authRoutes from "./routes/auth.js";   // ✅ Import your new auth routes
 import { connectDB } from "./config/db.js";
 import specs from "./docs/swagger.js"; // central Swagger config
 
@@ -21,6 +22,7 @@ app.use("/api/recipes", recipeRoutes);
 app.use("/api/ingredients", ingredientRoutes);
 app.use("/api/mealplans", mealPlanRoutes);
 app.use("/api/shoppinglists", shoppingListRoutes);
+app.use("/auth", authRoutes);   // ✅ Mount auth routes here
 
 // Swagger docs (schemas hidden by default)
 app.use(
