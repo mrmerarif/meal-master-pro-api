@@ -24,13 +24,7 @@ const router = express.Router();
  *     tags: [ShoppingLists]
  *     responses:
  *       200:
- *         description: List of shopping lists
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/ShoppingList'
+ *         description: Successfully retrieved all shopping lists
  *   post:
  *     summary: Create a new shopping list
  *     tags: [ShoppingLists]
@@ -59,11 +53,9 @@ const router = express.Router();
  *           type: string
  *     responses:
  *       200:
- *         description: Shopping list details
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ShoppingList'
+ *         description: Successfully retrieved shopping list
+ *       404:
+ *         description: Shopping list not found
  *   put:
  *     summary: Update a shopping list by ID
  *     tags: [ShoppingLists]
@@ -82,6 +74,8 @@ const router = express.Router();
  *     responses:
  *       200:
  *         description: Shopping list updated successfully
+ *       404:
+ *         description: Shopping list not found
  *   delete:
  *     summary: Delete a shopping list by ID
  *     tags: [ShoppingLists]
@@ -94,6 +88,8 @@ const router = express.Router();
  *     responses:
  *       200:
  *         description: Shopping list deleted successfully
+ *       404:
+ *         description: Shopping list not found
  */
 
 router.get("/", getShoppingLists);
