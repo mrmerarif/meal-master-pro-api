@@ -6,6 +6,7 @@ import {
   updateShoppingList,
   deleteShoppingList
 } from "../controllers/shoppingListsController.js";
+import { verifyGoogleToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -28,6 +29,8 @@ const router = express.Router();
  *   post:
  *     summary: Create a new shopping list
  *     tags: [ShoppingLists]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -37,6 +40,8 @@ const router = express.Router();
  *     responses:
  *       201:
  *         description: Shopping list created successfully
+ *       401:
+ *         description: Unauthorized
  */
 
 /**
@@ -59,6 +64,8 @@ const router = express.Router();
  *   put:
  *     summary: Update a shopping list by ID
  *     tags: [ShoppingLists]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -74,11 +81,15 @@ const router = express.Router();
  *     responses:
  *       200:
  *         description: Shopping list updated successfully
+ *       401:
+ *         description: Unauthorized
  *       404:
  *         description: Shopping list not found
  *   delete:
  *     summary: Delete a shopping list by ID
  *     tags: [ShoppingLists]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -88,14 +99,16 @@ const router = express.Router();
  *     responses:
  *       200:
  *         description: Shopping list deleted successfully
+ *       401:
+ *         description: Unauthorized
  *       404:
  *         description: Shopping list not found
  */
 
 router.get("/", getShoppingLists);
 router.get("/:id", getShoppingListById);
-router.post("/", createShoppingList);
-router.put("/:id", updateShoppingList);
-router.delete("/:id", deleteShoppingList);
+router.post("/", verifyGoogleToken, createShoppingList);
+router.put("/:id", verifyGoogleToken, updateShoppingList);
+router.delete("/:id", verifyGoogleToken, deleteShoppingList);
 
 export default router;

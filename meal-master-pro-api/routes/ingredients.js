@@ -5,6 +5,7 @@ import {
   updateIngredient,
   deleteIngredient
 } from "../controllers/ingredientsController.js";
+import { verifyGoogleToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -27,6 +28,8 @@ const router = express.Router();
  *   post:
  *     summary: Create a new ingredient
  *     tags: [Ingredients]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -36,6 +39,8 @@ const router = express.Router();
  *     responses:
  *       201:
  *         description: Ingredient created successfully
+ *       401:
+ *         description: Unauthorized
  */
 
 /**
@@ -44,6 +49,8 @@ const router = express.Router();
  *   put:
  *     summary: Update an ingredient by ID
  *     tags: [Ingredients]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -59,11 +66,15 @@ const router = express.Router();
  *     responses:
  *       200:
  *         description: Ingredient updated successfully
+ *       401:
+ *         description: Unauthorized
  *       404:
  *         description: Ingredient not found
  *   delete:
  *     summary: Delete an ingredient by ID
  *     tags: [Ingredients]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -73,13 +84,15 @@ const router = express.Router();
  *     responses:
  *       200:
  *         description: Ingredient deleted successfully
+ *       401:
+ *         description: Unauthorized
  *       404:
  *         description: Ingredient not found
  */
 
 router.get("/", getIngredients);
-router.post("/", createIngredient);
-router.put("/:id", updateIngredient);
-router.delete("/:id", deleteIngredient);
+router.post("/", verifyGoogleToken, createIngredient);
+router.put("/:id", verifyGoogleToken, updateIngredient);
+router.delete("/:id", verifyGoogleToken, deleteIngredient);
 
 export default router;

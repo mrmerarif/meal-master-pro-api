@@ -6,6 +6,7 @@ import {
   updateMealPlan,
   deleteMealPlan
 } from "../controllers/mealPlansController.js";
+import { verifyGoogleToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -28,6 +29,8 @@ const router = express.Router();
  *   post:
  *     summary: Create a new meal plan
  *     tags: [MealPlans]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -37,6 +40,8 @@ const router = express.Router();
  *     responses:
  *       201:
  *         description: Meal plan created successfully
+ *       401:
+ *         description: Unauthorized
  */
 
 /**
@@ -59,6 +64,8 @@ const router = express.Router();
  *   put:
  *     summary: Update a meal plan by ID
  *     tags: [MealPlans]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -74,11 +81,15 @@ const router = express.Router();
  *     responses:
  *       200:
  *         description: Meal plan updated successfully
+ *       401:
+ *         description: Unauthorized
  *       404:
  *         description: Meal plan not found
  *   delete:
  *     summary: Delete a meal plan by ID
  *     tags: [MealPlans]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -88,14 +99,16 @@ const router = express.Router();
  *     responses:
  *       200:
  *         description: Meal plan deleted successfully
+ *       401:
+ *         description: Unauthorized
  *       404:
  *         description: Meal plan not found
  */
 
 router.get("/", getMealPlans);
 router.get("/:id", getMealPlanById);
-router.post("/", createMealPlan);
-router.put("/:id", updateMealPlan);
-router.delete("/:id", deleteMealPlan);
+router.post("/", verifyGoogleToken, createMealPlan);
+router.put("/:id", verifyGoogleToken, updateMealPlan);
+router.delete("/:id", verifyGoogleToken, deleteMealPlan);
 
 export default router;
