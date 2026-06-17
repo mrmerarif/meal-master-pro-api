@@ -12,10 +12,12 @@ const recipeSchema = new mongoose.Schema(
       required: true,
       trim: true
     },
+    // ✅ Allow embedded ingredient names instead of ObjectIds
     ingredients: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Ingredient"
+        name: { type: String, required: true },
+        quantity: { type: String },
+        unit: { type: String }
       }
     ],
     createdAt: {
@@ -29,5 +31,4 @@ const recipeSchema = new mongoose.Schema(
 );
 
 const Recipe = mongoose.model("Recipe", recipeSchema);
-
 export default Recipe;

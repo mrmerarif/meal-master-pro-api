@@ -7,20 +7,12 @@ const shoppingListSchema = new mongoose.Schema(
       required: true,
       trim: true
     },
+    // ✅ Allow embedded ingredient objects instead of ObjectIds
     items: [
       {
-        ingredient: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Ingredient"
-        },
-        quantity: {
-          type: String,
-          required: true
-        },
-        unit: {
-          type: String,
-          required: true
-        }
+        ingredient: { type: String, required: true },
+        quantity: { type: String },
+        unit: { type: String }
       }
     ],
     createdBy: {
@@ -28,7 +20,7 @@ const shoppingListSchema = new mongoose.Schema(
       required: true
     }
   },
-  { timestamps: true }
+  { timestamps: true, collection: "shoppinglists" }
 );
 
 const ShoppingList = mongoose.model("ShoppingList", shoppingListSchema);

@@ -12,10 +12,19 @@ const mealPlanSchema = new mongoose.Schema(
       required: true,
       trim: true
     },
+    // ✅ Allow embedded recipe objects instead of ObjectIds
     recipes: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Recipe"
+        name: { type: String, required: true },
+        description: { type: String },
+        ingredients: [
+          {
+            name: { type: String },
+            quantity: { type: String },
+            unit: { type: String }
+          }
+        ],
+        steps: [{ type: String }]
       }
     ],
     createdBy: {
@@ -23,7 +32,7 @@ const mealPlanSchema = new mongoose.Schema(
       required: true
     }
   },
-  { timestamps: true }
+  { timestamps: true, collection: "mealplans" }
 );
 
 const MealPlan = mongoose.model("MealPlan", mealPlanSchema);

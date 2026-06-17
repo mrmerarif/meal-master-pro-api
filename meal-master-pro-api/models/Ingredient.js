@@ -1,9 +1,15 @@
 import mongoose from "mongoose";
 
-const ingredientSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  quantity: String,
-  unit: String
-});
+const ingredientSchema = new mongoose.Schema(
+  {
+    name: { type: String, required: true },
+    quantity: { type: String },
+    unit: { type: String }
+  },
+  {
+    collection: "ingredients"
+  }
+);
 
-export default mongoose.model("Ingredient", ingredientSchema);
+const Ingredient = mongoose.model("Ingredient", ingredientSchema);
+export default Ingredient;
