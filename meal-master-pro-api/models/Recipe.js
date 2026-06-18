@@ -12,7 +12,6 @@ const recipeSchema = new mongoose.Schema(
       required: true,
       trim: true
     },
-    // ✅ Allow embedded ingredient names instead of ObjectIds
     ingredients: [
       {
         name: { type: String, required: true },
@@ -20,6 +19,26 @@ const recipeSchema = new mongoose.Schema(
         unit: { type: String }
       }
     ],
+    prepTime: {
+      type: Number, // minutes
+      required: true
+    },
+    cookTime: {
+      type: Number, // minutes
+      required: true
+    },
+    servings: {
+      type: Number,
+      required: true
+    },
+    difficulty: {
+      type: String, // e.g. Easy, Medium, Hard
+      required: true
+    },
+    category: {
+      type: String, // e.g. Breakfast, Dinner
+      required: true
+    },
     createdAt: {
       type: Date,
       default: Date.now

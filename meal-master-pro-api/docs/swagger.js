@@ -47,11 +47,35 @@ const options = {
       schemas: {
         Recipe: {
           type: "object",
+          required: [
+            "name",
+            "description",
+            "ingredients",
+            "prepTime",
+            "cookTime",
+            "servings",
+            "difficulty",
+            "category"
+          ],
           properties: {
-            name: { type: "string" },
-            description: { type: "string" },
-            ingredients: { type: "array", items: { type: "string" } },
-            steps: { type: "array", items: { type: "string" } },
+            name: { type: "string", example: "Chicken Alfredo Pasta" },
+            description: { type: "string", example: "Creamy pasta with grilled chicken" },
+            ingredients: {
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  name: { type: "string", example: "Chicken" },
+                  quantity: { type: "string", example: "2" },
+                  unit: { type: "string", example: "breasts" }
+                }
+              }
+            },
+            prepTime: { type: "integer", example: 15 },
+            cookTime: { type: "integer", example: 25 },
+            servings: { type: "integer", example: 4 },
+            difficulty: { type: "string", example: "Medium" },
+            category: { type: "string", example: "Dinner" },
             createdAt: { type: "string", format: "date-time" }
           }
         },
@@ -68,7 +92,10 @@ const options = {
           properties: {
             title: { type: "string" },
             description: { type: "string" },
-            recipes: { type: "array", items: { type: "string" } },
+            recipes: {
+              type: "array",
+              items: { $ref: "#/components/schemas/Recipe" }
+            },
             createdBy: { type: "string" }
           }
         },
@@ -93,7 +120,6 @@ const options = {
       }
     },
 
-    
     paths: {
       "/auth/login": {
         get: {
